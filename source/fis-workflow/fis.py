@@ -133,7 +133,7 @@ class FIS(object):
         return xml
 
     def string_match(self, string, query):
-        reg = re.compile(query)
+        reg = re.compile(query, re.I)
         r = reg.search(string)
         ret = False
         if r:
