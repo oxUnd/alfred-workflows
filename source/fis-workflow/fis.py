@@ -65,17 +65,19 @@ class FIS(object):
     '''
     docs = {}
     # url of the doc
-    doc_url = ''
+    doc_url = 'https://github.com/fis-dev/fis/wiki/配置API'
 
     cache_file = ''
 
-    CACHE_MAX_TIME = 108000
+    # 一个月
+    CACHE_MAX_TIME = 2592000
 
     def __init__(self, config = {}):
         if 'url' in config:
             self.doc_url = config['url']
-        else:
-            self.doc_url = 'https://github.com/fis-dev/fis/wiki/配置API'
+        if 'cache_max_time' in config:
+            self.CACHE_MAX_TIME = config['cache_max_time']
+
         self.cache_file = os.environ['HOME'] + '/.fis/cache/alf.cache'
         docs = self.get_cache()
         if not docs:
