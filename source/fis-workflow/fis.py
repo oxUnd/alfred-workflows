@@ -37,7 +37,7 @@ class DocParser():
         return docs
 
     def _items(self):
-        res = re.findall(r'<h3>((?:(?!</h3>)[\s\S])+)</h3>\s+<ul>((?:(?!</ul>)[\s\S])+)</ul>', self.doc_string)
+        res = re.findall(r'<h3>((?:(?!</h3>)[\s\S])+)</h3>\s+<ul.*?>((?:(?!</ul>)[\s\S])+)</ul>', self.doc_string)
         return res
 
 
@@ -110,7 +110,7 @@ class FIS(object):
     def fetch_url(self):
         reqest = urllib2.urlopen(urllib.quote_plus(self.doc_url, '/:'))
         if reqest.getcode() != 200:
-            raise Exception('Cant\'t connect https://github.com')
+           raise Exception('Cant\'t connect https://github.com')
         doc = reqest.read()
         parser = DocParser(doc)
         res = parser.parse()
@@ -118,6 +118,7 @@ class FIS(object):
         return res
 
     def list(self, query):
+        xml = ''
         if self.docs:
             xml = '<items>'
             for k in self.docs:
